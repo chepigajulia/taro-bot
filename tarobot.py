@@ -156,8 +156,8 @@ user_questions = {}
 @bot.message_handler(commands=["start"])
 def start(message):
     bot.send_message(message.chat.id,
-    "Добро пожаловать в Таро Манара 🃏\n\nПредставь человека и нажми намкнопку, чтобы узнать о его чувствах к тебе.",
-    reply_markup=keyboard)
+    "Добро пожаловать в Таро Манара 🃏\n\n✨ Здесь ты найдёшь ответы на вопросы о романтических и дружеских отношениях. Манара раскрывает тайные мысли и чувства, объясняет поведение людей и работает с подсознанием.\n\n🖤 Помни о том, что таро — это не гарантия определённого исхода и не приговор. Доверяй в первую очередь своему внутреннему голосу.\n\nВыбери свой вопрос 👇")
+
 
 @bot.callback_query_handler(func=lambda call: call.data in ["feelings", "secrets", "relationship"])
 def handle_question (call):
@@ -166,24 +166,24 @@ def handle_question (call):
          board = telebot.types.InlineKeyboardMarkup()
          but = telebot.types.InlineKeyboardButton ("Вытащить карту", callback_data="draw")
          board.add(but)
-         bot.send_message(call.message.chat.id, "💕 Вопрос: что он/она ко мне чувствует?\n\nСконцентрируй на вопросе и мысленно загадай человека, о котором спрашиваешь.Визуализируй его лицо, как вы взаимодействуете, последние контакты, которые между вами происходили. Дай себе немного времени на визуализацию и после переходи к вытягиванию карты", reply_markup=board)
+         bot.send_message(call.message.chat.id, "💕 Вопрос: что он/она ко мне чувствует?\n\nСконцентрируйся на вопросе и мысленно загадай человека, о котором спрашиваешь.\n\nВизуализируй его лицо, как вы взаимодействуете, последние контакты, которые между вами происходили. Дай себе немного времени на визуализацию и после переходи к вытягиванию карты.", reply_markup=board)
     elif call.data == "secrets":
          user_questions[call.from_user.id] = "secrets"
          board = telebot.types.InlineKeyboardMarkup()
          but = telebot.types.InlineKeyboardButton ("Вытащить карту", callback_data="draw")
          board.add(but)
-         bot.send_message(call.message.chat.id, "🔮 Вопрос: что от меня скрывают?\n\nСконцентрируй на вопросе и мысленно загадай человека, о котором спрашиваешь.Визуализируй его лицо, как вы взаимодействуете, последние контакты, которые между вами происходили. Дай себе немного времени на визуализацию и после переходи к вытягиванию карты", reply_markup=board)
+         bot.send_message(call.message.chat.id, "🔮 Вопрос: что от меня скрывают?\n\nСконцентрируйся на вопросе и мысленно загадай человека, о котором спрашиваешь.\n\nВизуализируй его лицо, как вы взаимодействуете, последние контакты, которые между вами происходили. Дай себе немного времени на визуализацию и после переходи к вытягиванию карты.", reply_markup=board)
     elif call.data == "relationship":
          user_questions[call.from_user.id] = "relationship" 
          board = telebot.types.InlineKeyboardMarkup()
          but = telebot.types.InlineKeyboardButton ("Вытащить карту", callback_data="draw")
          board.add(but)
-         bot.send_message(call.message.chat.id, "🌙 Вопрос: какое будущее у наших отношений?\n\nСконцентрируй на вопросе и мысленно загадай человека, о котором спрашиваешь.Визуализируй его лицо, как вы взаимодействуете, последние контакты, которые между вами происходили. Дай себе немного времени на визуализацию и после переходи к вытягиванию карты", reply_markup=board)
+         bot.send_message(call.message.chat.id, "🌙 Вопрос: какое будущее у наших отношений?\n\nСконцентрируйся на вопросе и мысленно загадай человека, о котором спрашиваешь.\n\nВизуализируй его лицо, как вы взаимодействуете, последние контакты, которые между вами происходили. Дай себе немного времени на визуализацию и после переходи к вытягиванию карты.", reply_markup=board)
 
 @bot.callback_query_handler(func=lambda call: call.data == "draw")
 def draw_card(call):
     question = user_questions[call.from_user.id]
-    
+
     if question == "feelings":
         cards_to_use = cards_feelings
     elif question == "secrets":
